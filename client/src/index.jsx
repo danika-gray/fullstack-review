@@ -7,7 +7,7 @@ import RepoList from './components/RepoList.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       repos: []
     }
 
@@ -16,6 +16,16 @@ class App extends React.Component {
   search (term) {
     console.log(`${term} was searched`);
     // TODO
+    // when someone searches a term
+    // send post request to the server/index file with term
+    // when post returns, update this.state.repos with top 25 repos by that username
+    $.post('/repos', (data) => {
+      console.log(data, 'data'); // note, may need to parse?? but i dont think so
+      // should be an array of repo objects associated with the searched user
+      this.setState({
+        repos: data
+      })
+    });
   }
 
   render () {
