@@ -26,18 +26,22 @@ app.post('/repos', function (req, res) {
 
   helpers.getReposByUsername(req.body.username, (err, githubData) => {
     if (err) {
+      console.log(err);
       res.end();
     } else {
-      let repos = github.Data.map((repo) => {
+      let repos = githubData.map(({ id, name, html_url, stargazers_count, owner }) => {
         // object with fields
-        console.log(repo, 'repo');
+        //console.log(repo, 'repo');
 
         let repoObj = { id, name, html_url, stargazers_count };
-        repoObj.userID = repo.owner.id;
-        repoObj.username = repo.owner.name;
+        repoObj.userID = owner.id;
+        repoObj.username = owner.login;
 
+        //console.log(repoObj, 'repoObj');
         return repoObj;
       });
+      //console.log('REPOS', repos);
+
       let repoFilterObj = {};
       let duplicateRepos = [];
       repos.forEach((repo) => {
@@ -48,14 +52,15 @@ app.post('/repos', function (req, res) {
         }
       });
 
-      console.log(repoFilterObj);
-      console.log(duplicateRepos);
+      //console.log(repoFilterObj);
+      //console.log(duplicateRepos);
 
       repos = repos.filter((repo) => {
         if (duplicateRepos.indexOf(repo) === -1) {
           return true;
         }
       });
+      console.log('REPOS AFTER FILTER', repos);
 
       // send repos array to database for storage
       database.save(repos, (err, result) => {
