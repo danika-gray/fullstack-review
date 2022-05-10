@@ -27,6 +27,7 @@ class App extends React.Component {
     }, 'json');
     // there may be a way to format $.post that is more promise like and uses .done() and .fail()
     // or .error() but I want to make sure this code works/do mvp
+    // console.log(this.state.repos, 'repos in index.jsx');
   }
 
   render () {

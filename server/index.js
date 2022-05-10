@@ -67,9 +67,11 @@ app.post('/repos', function (req, res) {
         if (err) {
           res.end();
         } else {
+          console.log(result, 'result');
+          //console.log(repos, 'repos');
           // repos have been saved
           // send back repos to be displayed in index.jsx
-          res.status(201).res.send(repos);
+          res.json(repos);
         }
       });
     }
