@@ -6,23 +6,18 @@ class Search extends React.Component {
     this.state = {
       term: ''
     }
+    this.onChange = this.onChange.bind(this);
+    this.search = this.search.bind(this);
   }
 
   onChange (e) {
-    let currentTerm = this.state.term + e.target.value; // should copy old term
-    // and update it with new input values
     this.setState({
-      term: currentTerm
+      term: e.target.value
     });
   }
 
   search() {
     this.props.onSearch(this.state.term);
-
-    // reset state to empty
-    this.setState({
-      term: ''
-    });
   }
 
   render() {
