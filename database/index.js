@@ -18,12 +18,8 @@ let repoSchema = mongoose.Schema({
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = async (data, callback) => {
-  console.log('here in save');
-  console.log(data);
-  // TODO: Your code here
-  // This function should save a repo or repos to
-  // the MongoDB
-  // let id = data.id;
+  // console.log('here in save');
+  // console.log(data);
 
   let repos = data.map((dataObj) => {
     return new Repo({
@@ -36,13 +32,14 @@ let save = async (data, callback) => {
     });
   });
 
-  repos = repos.map(async (repo) => {
+  repos = repos.map((repo) => {
     return repo.save();
   });
 
-  console.log(repos);
+  //console.log(repos);
   Promise.all(repos)
-    .then(callback(null, 'saved'));
+    .then(callback(null, 'saved'))
+    .catch(callback('err saving data', null));
 
 // map every value in schema and assign to correct data point
 // using mongo db documentation!

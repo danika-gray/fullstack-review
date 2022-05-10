@@ -16,18 +16,12 @@ const helpers = require('../helpers/github.js');
 const database = require('../database/index.js');
 
 app.post('/repos', function (req, res) {
-  console.log(req.body.username, 'req.body.username in server/index.js');
-  // ^^ this is working as expected
-
-  // TODO - your code here!
-  // This route should take the github username provided
-  // and get the repo information from the github API, then
-  // save the repo information in the database
-
   helpers.getReposByUsername(req.body.username, (err, githubData) => {
     if (err) {
       console.log(err);
-      res.end();
+      res.send('error');
+      return;
+
     } else {
       let repos = githubData.map(({ id, name, html_url, stargazers_count, owner }) => {
         // object with fields
@@ -60,18 +54,24 @@ app.post('/repos', function (req, res) {
           return true;
         }
       });
-      console.log('REPOS AFTER FILTER', repos);
+      //console.log('REPOS AFTER FILTER', repos);
 
       // send repos array to database for storage
       database.save(repos, (err, result) => {
         if (err) {
-          res.end();
+          res.send('error saving data');
+          return;
+
         } else {
           console.log(result, 'result');
-          //console.log(repos, 'repos');
-          // repos have been saved
-          // send back repos to be displayed in index.jsx
-          res.json(repos);
+          // repos.sort((a, b) => (a.stargazers_count > b.stargazers_count) ? -1 : 1);
+          // console.log(repos, 'repos after sort');
+          // if (repos.length > 25) {
+          //   repos = repos.slice(0, 25);
+          // };
+
+          // res.send(repos);
+          res.send({result: result});
         }
       });
     }
