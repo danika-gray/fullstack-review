@@ -15,17 +15,18 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    // TODO
-    // when someone searches a term
-    // send post request to the server/index file with term
-    // when post returns, update this.state.repos with top 25 repos by that username
-    $.post('/repos', (data) => {
+    console.log({'username': term}, 'json data to send');
+
+    $.post('/repos', {'username': term}, (data) => {
       console.log(data, 'data'); // note, may need to parse?? but i dont think so
       // should be an array of repo objects associated with the searched user
       this.setState({
         repos: data
+        // data should be the top 25 posts, as an array of objects
       })
-    });
+    }, 'json');
+    // there may be a way to format $.post that is more promise like and uses .done() and .fail()
+    // or .error() but I want to make sure this code works/do mvp
   }
 
   render () {
