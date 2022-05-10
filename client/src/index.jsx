@@ -15,7 +15,7 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    console.log({'username': term}, 'json data to send');
+    //console.log({'username': term}, 'json data to send');
 
     $.post('/repos', {'username': term}, (data) => {
       console.log(data, 'data'); // note, may need to parse?? but i dont think so

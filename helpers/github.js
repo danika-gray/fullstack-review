@@ -1,5 +1,6 @@
 const axios = require('axios');
 const config = require('../config.js');
+const path = require('path');
 
 let getReposByUsername = (username, callback) => {
   let options = {
@@ -10,6 +11,9 @@ let getReposByUsername = (username, callback) => {
       'Authorization': `token ${config.TOKEN}`
     }
   };
+
+  console.log(options.url); // working
+  console.log(options.headers); // working
 
   axios.get(options.url, { 'headers': options.headers })
     .then((res) => {
