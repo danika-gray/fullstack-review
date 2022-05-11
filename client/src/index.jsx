@@ -10,16 +10,24 @@ class App extends React.Component {
     this.state = {
       repos: []
     }
-    this.urlClickHandler.bind(this);
+    //this.urlClickHandler.bind(this);
+    this.getData = this.getData.bind(this);
   }
 
-  componentDidMount() {
-    $.get('/repos', (data) => {
-      console.log(data, 'data in componentDidMount');
+  getData(term) {
+    // send get request whenever invoked
+    $.get(`/repos/${term}`, (data) => {
       this.setState({
         repos: data
       })
     }, 'json');
+  }
+
+  componentDidMount() {
+    this.getData();
+    // new function for get request
+    // invoke get request function after componentDidMount
+    // and after data is posted
   }
 
   search (term) {
@@ -35,9 +43,14 @@ class App extends React.Component {
     //   })
     // }, 'json');
 
+    // look for success for jquery .post
+
     $.post('/repos', {'username': term})
       .done((data) => {
       console.log(data, 'data');
+      this.getData(term);
+      // should be able to use getData in here
+      // or invoke getData with this anon function
       // should be an array of repo objects associated with the searched user
     })
     .fail((err) => {

@@ -91,7 +91,7 @@ app.get('/repos', function (req, res) {
 
 app.get('/repos/:searchText', (req, res) => {
   console.log(req.params.searchText);
-  // doesn't show up?
+  // get data from the database and send back to user
 })
 
 let port = 1128;
