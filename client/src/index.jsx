@@ -37,7 +37,7 @@ class App extends React.Component {
 
     $.post('/repos', {'username': term})
       .done((data) => {
-      console.log(data, 'data'); // note, may need to parse?? but i dont think so
+      console.log(data, 'data');
       // should be an array of repo objects associated with the searched user
     })
     .fail((err) => {
@@ -46,9 +46,8 @@ class App extends React.Component {
   }
 
   urlClickHandler(event) {
-    $.get(`/repos?${event}`, (data) => {
-      console.log(data);
-    })
+    console.log(event.target.value, 'clicked');
+    $.get(`/repos/${event.target.value}`);
   }
 
   render () {

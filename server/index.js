@@ -76,10 +76,6 @@ app.post('/repos', function (req, res) {
 });
 
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should send back the top 25 repos
-
-  // query the database
   database.Repo.find({})
     .sort('-stargazers_count')
     .limit(25)
@@ -92,6 +88,11 @@ app.get('/repos', function (req, res) {
       res.setStatus(500).send({error: err});
     }); // should find all documents then sort or catch
 });
+
+app.get('/repos/:searchText', (req, res) => {
+  console.log(req.params.searchText);
+  // doesn't show up?
+})
 
 let port = 1128;
 
