@@ -14,14 +14,12 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // make a get request to the server to get the top 25 repos
-    // think it should be top 25 out of all possible repos, not just one user
-    // $.get('/repos', (data) => {
-    //   console.log(data, 'data in componentDidMount');
-    //   this.setState({
-    //     repos: data
-    //   })
-    // }, 'json');
+    $.get('/repos', (data) => {
+      console.log(data, 'data in componentDidMount');
+      this.setState({
+        repos: data
+      })
+    }, 'json');
   }
 
   search (term) {
@@ -41,10 +39,6 @@ class App extends React.Component {
       .done((data) => {
       console.log(data, 'data'); // note, may need to parse?? but i dont think so
       // should be an array of repo objects associated with the searched user
-      this.setState({
-        repos: data
-        // data should be the top 25 posts, as an array of objects
-      })
     })
     .fail((err) => {
       alert('post failed');
