@@ -1,4 +1,9 @@
 const express = require('express');
+
+// import helpers/github.js and database/index.js
+const helpers = require('../helpers/github.js');
+const database = require('../database/index.js');
+
 let app = express();
 
 app.use(express.static(__dirname + '/../client/dist'));
@@ -10,10 +15,6 @@ app.use(
   })
 );
 app.use(express.json());
-
-// import helpers/github.js and database/index.js
-const helpers = require('../helpers/github.js');
-const database = require('../database/index.js');
 
 app.post('/repos', function (req, res) {
   helpers.getReposByUsername(req.body.username, (err, githubData) => {
@@ -67,7 +68,6 @@ app.post('/repos', function (req, res) {
           //   repos = repos.slice(0, 25);
           // };
 
-          // res.send(repos);
           res.send({result: result});
         }
       });
@@ -78,6 +78,19 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
+
+  // query the database
+  database.Repo.find({})
+    .sort('-stargazers_count')
+    .limit(25)
+    .exec()
+    .then((data) => {
+      //console.log(data, 'data', data.length, 'length');
+      res.send(data);
+    })
+    .catch((err) => {
+      res.setStatus(500).send({error: err});
+    }); // should find all documents then sort or catch
 });
 
 let port = 1128;

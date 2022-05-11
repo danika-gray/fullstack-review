@@ -5,15 +5,10 @@ let repoSchema = mongoose.Schema({
   id: {type: Number, unique: true}, // prevent re-storing the same data
   name: String,
   html_url: String,
-  username: String, // track who a particular repo belongs to
+  username: String,
   userID: String,
   stargazers_count: Number
 });
-
-// in theory perhaps I can search repoSchema.repo_owner to get all repo objects with
-// that person's username but this may require refactoring.
-// another idea is to store one username in each repoSchema and keep an array of objects
-// of all of that person's repos.
 
 let Repo = mongoose.model('Repo', repoSchema);
 
@@ -47,3 +42,4 @@ let save = async (data, callback) => {
 }
 
 module.exports.save = save;
+module.exports.Repo = Repo;
