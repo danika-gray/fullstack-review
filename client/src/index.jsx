@@ -10,7 +10,7 @@ class App extends React.Component {
     this.state = {
       repos: []
     }
-
+    this.urlClickHandler.bind(this);
   }
 
   componentDidMount() {
@@ -45,10 +45,16 @@ class App extends React.Component {
     })
   }
 
+  urlClickHandler(event) {
+    $.get(`/repos?${event}`, (data) => {
+      console.log(data);
+    })
+  }
+
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos}/>
+      <RepoList repos={this.state.repos} urlClickHandler={this.urlClickHandler}/>
       <Search onSearch={this.search.bind(this)}/>
     </div>)
   }

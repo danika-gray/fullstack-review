@@ -8,14 +8,18 @@ import RepoListItem from './RepoListItem.jsx';
 //   </div>
 // )
 
-const RepoList = ({repos}) => (
+const RepoList = ({repos, urlClickHandler}) => (
   <div>
     <h4> Repo List Component </h4>
-    {repos.map((repo) => {
-      return (
-        <RepoListItem repo={repo}/>
-      )
-    })}
+    <table>
+      <tbody>
+      {repos.map((repo) => {
+        return (
+          <RepoListItem repo={repo} urlClickHandler={urlClickHandler}/>
+        )
+      })}
+      </tbody>
+    </table>
     <p>There are {repos.length} repos.</p>
   </div>
 )
