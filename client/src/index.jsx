@@ -13,21 +13,42 @@ class App extends React.Component {
 
   }
 
+  componentDidMount() {
+    // make a get request to the server to get the top 25 repos
+    // think it should be top 25 out of all possible repos, not just one user
+    // $.get('/repos', (data) => {
+    //   console.log(data, 'data in componentDidMount');
+    //   this.setState({
+    //     repos: data
+    //   })
+    // }, 'json');
+  }
+
   search (term) {
     console.log(`${term} was searched`);
     //console.log({'username': term}, 'json data to send');
 
-    $.post('/repos', {'username': term}, (data) => {
+    // $.post('/repos', {'username': term}, (data) => {
+    //   console.log(data, 'data'); // note, may need to parse?? but i dont think so
+    //   // should be an array of repo objects associated with the searched user
+    //   this.setState({
+    //     repos: data
+    //     // data should be the top 25 posts, as an array of objects
+    //   })
+    // }, 'json');
+
+    $.post('/repos', {'username': term})
+      .done((data) => {
       console.log(data, 'data'); // note, may need to parse?? but i dont think so
       // should be an array of repo objects associated with the searched user
       this.setState({
         repos: data
         // data should be the top 25 posts, as an array of objects
       })
-    }, 'json');
-    // there may be a way to format $.post that is more promise like and uses .done() and .fail()
-    // or .error() but I want to make sure this code works/do mvp
-    // console.log(this.state.repos, 'repos in index.jsx');
+    })
+    .fail((err) => {
+      alert('post failed');
+    })
   }
 
   render () {

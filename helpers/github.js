@@ -13,12 +13,12 @@ let getReposByUsername = (username, callback) => {
     }
   };
 
-  console.log(options.url); // working
-  console.log(options.headers); // working
+  //console.log(options.url); // working
+  //console.log(options.headers); // working
 
   axios.get(options.url, options)
     .then((res) => {
-      console.log(res.data, 'res.data'); // expect a complex array of objects with nested objects
+      //console.log(res.data, 'res.data'); // expect a complex array of objects with nested objects
       callback(null, res.data); // send back data to index.js
     })
     .catch((err) => {

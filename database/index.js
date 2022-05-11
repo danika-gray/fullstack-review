@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/fetcher');
 
 let repoSchema = mongoose.Schema({
-  id: String,
+  id: {type: Number, unique: true}, // prevent re-storing the same data
   name: String,
   html_url: String,
   username: String, // track who a particular repo belongs to
@@ -39,7 +39,7 @@ let save = async (data, callback) => {
   //console.log(repos);
   Promise.all(repos)
     .then(callback(null, 'saved'))
-    .catch(callback('err saving data', null));
+    .catch((err) => callback(err, null));
 
 // map every value in schema and assign to correct data point
 // using mongo db documentation!
